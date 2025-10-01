@@ -1,0 +1,202 @@
+{% extends 'base.html' %}
+<!--
+  {% block javascript %}
+<script type="text/javascript" source="myscript.js"></script>
+{% endblock javascript%}
+-->
+
+{% block title %}
+B.G Renual Status
+{% endblock title %}
+
+{% block body %}
+
+<script  type="text/javascript">
+  $(function() {
+	//If check_all checked then check all table rows
+	$("#check_all").on("click", function () {
+		if ($("input:checkbox").prop("checked")) {
+			$("input:checkbox[name='row-check']").prop("checked", true);
+		} else {
+			$("input:checkbox[name='row-check']").prop("checked", false);
+		}
+	});
+	// Check each table row checkbox
+	$("input:checkbox[name='row-check']").on("change", function () {
+		var total_check_boxes = $("input:checkbox[name='row-check']").length;
+		var total_checked_boxes = $("input:checkbox[name='row-check']:checked").length;
+
+		// If all checked manually then check check_all checkbox
+		if (total_check_boxes === total_checked_boxes) {
+			$("#check_all").prop("checked", true);
+		}
+		else {
+			$("#check_all").prop("checked", false);
+		}
+	});
+});
+function printSelected() {
+  let elements = $('[name="row-check"]');
+  //alert(elements.length);
+  //alert(elements[0].getAttribute('name'));  
+  var sid_list = "";
+  for(let i in elements) { 
+      let ele = elements[i];
+      //alert(ele);
+      console.log(ele);
+      
+      //alert(cur_id);
+      //if($(`input:checkbox[id='${cur_id}']`).prop("checked"))
+        if(ele.checked) {
+          let cur_id = ele.getAttribute('value');
+          console.log(cur_id);
+        sid_list += cur_id+',';
+        
+        }
+    }
+    //console.log(sid_list);
+    const response = confirm("Do you want Print the selected records?");
+
+    if (response) {
+      $.post("/printselected", {data:sid_list}, function(result){
+        console.log("Printed successfully");
+      });
+    }
+}
+
+
+function deleteSelected() {
+  let elements = $('[name="row-check"]');
+  //alert(elements.length);
+  //alert(elements[0].getAttribute('name'));
+
+  let ischeckboxChecked = 0;
+  for(let i in elements) {
+    let ele = elements[i];
+      if(ele.checked)
+        ischeckboxChecked = ischeckboxChecked + 1;
+  }
+  //alert(ischeckboxChecked);
+  if(!ischeckboxChecked) {
+    alert("No item checked to delete");
+    return;
+  } 
+    var sid_list = "";
+    for(let i in elements) { 
+        let ele = elements[i];
+        //alert(ele);
+        console.log(ele);
+        //alert(cur_id);
+        //if($(`input:checkbox[id='${cur_id}']`).prop("checked"))
+          if(ele.checked) {
+            let cur_id = ele.getAttribute('value');
+            console.log(cur_id);
+          sid_list += cur_id+',';
+          }
+    }
+     console.log(sid_list);
+     //alert(sid_list.length)
+    const response = confirm("Do you want to delete the selected records?");
+
+      if (response) { 
+        /*
+      $.ajax({
+        url:'/deleteselected',
+        type:'POST',
+        data:{data:sid_list},
+        success:function(reponse) {
+          console.log("Save successfully");
+        }         
+    });*/
+    $.post("/deleteselected", {data:sid_list}, function(result){
+      console.log("Deleted successfully");
+      window.location.reload();
+    });
+    //$("input:checkbox[name='row-check']").prop("checked", false);
+    
+  }
+}
+</script>
+<div class="table-responsive">
+<!-- below with to endwith is used to display the messages in Flask UI-->
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+  <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+    <span aria-hidden="true"&times;></span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<!---->
+  <h1 style="text-align:center"> Bank Guarantee Total Units(Records)</h1>
+  <!--<form action="/deleteselected" method="post">-->
+  <div style="flex:display">
+    <button type="submit" class="btn btn-primary" style="float:right;text-color:white;margin-left:10px" name="action" value="delete" onclick="deleteSelected()">Deleted Selected</button></a></td>
+    <button  type="submit" class="btn btn-primary" style="float:right;text-color:white;" name="action" value="print" onclick="printSelected()" disabled>Print Selected</button></a></td>
+  </div>
+  <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">
+          <input type="checkbox" id="check_all" onclick="checkAll(this)"/></a>
+          </th>
+          <!--<th scope="col">Serial No</th>-->
+          <th scope="col" rowspan="4">Unit Name</th>
+          <th scope="col" rowspan="2">Bank Name</th>
+          <th scope="col" rowspan="5">BG Details</th>
+          <th scope="col">Security Value</th>
+          <th scope="col">Submission Date</th>
+          <th scope="col">Renewal Date</th>
+          <th scope="col">Claim Upto</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>
+          <th scope="col">View</th>
+          <th scope="col">Print to pdf</th>
+        </tr>
+      </thead>
+      <tbody>         
+        {% for post in query %}
+          <tr>
+              <td><input type="checkbox" id="{{post.sid}}" name="row-check" value="{{post.sid}}"></td>
+              <!--<th scope="row">{{post.sid}}</th>-->
+              <td style="width:25%">
+                  {{post.unitname}},
+                  {{post.unitemail}},
+                  {{post.unitaddress}},
+                  {{post.unitnumber}}
+              </td>
+              <td style="width:25%">
+                  {{post.bankname}},
+                  {{post.bankaddress}}
+              </td>
+              <td style="width:25%">
+                  {{post.bgnumber}},
+                  {{post.bgdate}},
+                  {{post.stampnumber}},
+                  {{post.validperiod}},
+                  {{post.amount}}
+              </td>
+              <td>{{post.securityvalue}}</td>
+              <td>{{post.submitdate}}</td>
+              <td style="width:25%">{{post.renewaldate}}</td>
+              <td>{{post.claimamount}}</td>
+              <td><a href="/edit/{{post.sid}}"><button class="btn btn-primary">Edit</button></a></td>
+              <td><a href="/delete/{{post.sid}}"><button onclick="return confirm('Are you sure, Do you want delete record data?');" class="btn btn-danger">Delete</button></a></td>
+              <td><a href="/generatepdfnew/{{post.sid}}"><button class="btn btn-primary">View</button></a></td>
+              <td><a href="/exportnew/{{post.sid}}"><button class="btn btn-primary" onclick="return confirm('Are you sure, Do you want to print record data?');">Print</button></a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+ <!--</form> -->
+</div> 
+{% endblock body %}
+{% block finalscript %}
+<script>
+  $('.bgrenewal-item').toggleClass('active');
+</script>
+{% endblock %}

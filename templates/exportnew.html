@@ -1,0 +1,72 @@
+<!--
+{% block css %}
+    @media all {
+        .page-break { display: none; }
+    }
+        
+    @media print {
+        .page-break { display: block; page-break-before: always; }
+    }
+{% endblock css %}
+-->
+{% block body %}
+<form action="/exportnew/{{posts.sid}}" method="post" class="jumbotron">
+    <p>
+        <pre>
+        <font size="3" face="arial">
+        <b>Ref.</b> NSIC/BNG/RMA/SMC/
+        <b>Dated:</b>{{posts.currentdate}}<br>
+        To,
+        The Branch Manager
+        {{posts.bankname}}
+        {{posts.address}}<br>
+    
+        <b>Subject:</b> Confirmation of Bank Guarantee No:{{posts.bgnumber}} Dated.{{posts.bgdate}} for a sum 
+                        of <b>Rs.{{posts.amount}}/-</b>({{posts.amount_in_words}}) having validity date: {{posts.validperiod}} & claim date: {{posts.claimperiod}}<br>
+                                                        
+        <b>Dear Sir,</b>
+                    The above bank gaurantee has been issued by your branch, in our favour on stamp
+                    paper bearing serial no {{posts.stampnumber}} on behalf of M/S. {{posts.unitname}}
+                    You are, therfore, requested to confirm issuance of above bank gaurantee in our favour.
+        <br>
+        Thanking You,<br>
+                                                                                                        Yours Sincerely,<br>
+                                                                                                        (V.SURESH BABU)
+                                                                                                        Deputy General Manager
+       
+        </font>
+    </pre>
+    </p>
+    <!-- <div class="page-break"></div> -->
+    <div style="break-after:page"></div>
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+    <p >
+        <pre>
+        <font size="3" face="arial">
+        <b>Ref.</b> NSIC/BNG/RMA/SMC/
+        <b>Dated:</b>{{posts.currentdate}}<br>
+    
+        To,
+        The Regional Manager
+        RO South
+        {{posts.zonalbankname}}
+        {{posts.zonaladdress}}<br>
+    
+        <b>Subject:</b> Confirmation of Bank Guarantee No:{{posts.bgnumber}} Dated.{{posts.bgdate}} for a sum
+                        of <b>Rs.{{posts.amount}}/-</b>({{posts.amount_in_words}}) having validity date: {{posts.validperiod}} & claim date: {{posts.claimperiod}}
+        <br>
+        <b>Dear Sir,</b>
+                    The above bank gaurantee has been issued by your branch, in our favour on stamp
+                    paper bearing serial no {{posts.stampnumber}} on behalf of M/S. {{posts.unitname}}
+                    You are, therfore, requested to confirm issuance of above bank gaurantee in our favour.
+        
+        <br>
+        Thanking You,<br>
+                                                                                                            Yours Sincerely,<br>
+                                                                                                            (V.SURESH BABU)
+                                                                                                            Deputy General Manager
+        </font>
+    </pre>
+    </p>
+</form>
+{% endblock body %}

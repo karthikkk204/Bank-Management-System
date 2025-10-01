@@ -1,0 +1,111 @@
+{% block title %}
+View Report
+{% endblock title %}
+
+{% block body %}
+<form action="/export/{{posts.sid}}" method="post" class="jumbotron">
+    <p>
+        Ref. NSIC/BNG/RMA <span style="float: right">Dated:{{posts.currentdate}}</span><br><br>
+        To,<br>
+        The Chief Manager<br>
+        {{posts.bankname}}<br>
+        {{posts.address}}<br><br>
+    
+        Subject: Extension of Bank Guarantee issued by you favour of NSIC Ltd. Bangalore, on behalf of M/S. {{posts.unitname}},{{posts.unitaddress}}<br><br>
+    
+        Dear Sir,
+        <br>
+        This is referece to the following Bank Guaranteees issued by you on behalf of
+        M/s.  {{posts.unitname}} in favour of NSIC Ltd., Branch Office Bangalore.
+        <br>
+        <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Sl.No</th>
+                <th scope="col">Bank Guarantee<br> No</th>
+                <th scope="col">Date of Issue <br>of Original BG</th>
+                <th scope="col">Stamp Paper No. <br>of Original BG</th>
+                <th scope="col">Validity <br>Period</th>
+                <th scope="col">Claim Upto <br>Period</th>
+                <th scope="col">Amount <br>(in Rs.)</th>
+              </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>
+                        {{posts.bgnumber}}
+                    </td>
+                    <td>
+                        {{posts.bgdate}}
+                    </td>
+                    <td>
+                        {{posts.stampnumber}}
+                    </td>
+                    <td>
+                        {{posts.validperiod}}
+                    </td>
+                    <td>
+                        {{posts.claimperiod}}
+                    </td>
+                    <td>
+                        {{posts.amount}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <span style="text-align: justify,text-justify: inter-word">You are requested to extend the validity of the above mentioned Bank Guaranteees
+        for a further period of ONE year from the date of expiry on a non-judicial
+        stamp of Rs. 200/- The same is required to be extended & Received by NSIC, Branch
+        office, Bangalore before expiry of the validity period and the message thereof must be
+        transmitted by the issuing bank through Structured Financial Messaging System
+        (SFMS) to Punjab National Bank, 1078,11th Main, 9th Cross, Dr. Modi Hospital
+        Road, MahalakshmiLayout, Bangalore-560086, Having IFSC PUNB0392500, Account
+        Number :3925002100002811 through SFMS and authenticated by the said NSIC's
+        bank.</span>
+        <br>
+        <br>
+        In case, The above Bank Guarantee/s is/are not extended on or before the date of
+        validity, This letter may itself be treated as our claim for invocation of
+        the bank Guarantee / BG Revoke/ Demand letter and full bank Guarantee amount of Rs.
+        {{posts.amount}}({{posts.amount_in_words}}) to be paid to us through RTGS in 
+        favour of "The National Small Industries Corporation Limited", Immediately
+        and the bank shall pay BG claim amount with interest @18% p.a., w.e.f. date of
+        expiry of BG till date of credit of amount in our below mentioned designated
+        bank account.
+        <br>
+        <p align:'center'>
+        <br>
+                            Bank Details:
+                            ________________<br>
+        
+        <br>                  
+                Punjab National Bank,<br>
+                NSIC Bhawan, Okhla Industrial Estate, New Delhi,
+                Account No:-0602002100319130, IFSC Code:PUNB0060200
+        </p>
+        <br>
+        Thanking You,
+        <br>
+        Yours faithfully,
+        <br>
+        <br>
+        (V.Suresh Babu)<br>
+        Sr. Branch Manager<br><br>
+    
+        C.C. To,
+        <br>
+        M/S. {{posts.unitname}}<br>
+        {{posts.uaddress}}
+        
+        <br>
+        <br>
+        Request to coordiante with your bank to extend the validity of the above
+        referred Bank Guarantee for a further  period of one year from the date of
+        expiry on a non judical stamp paper of Rs. 200/-. The same is required to be
+        extended and received by NSIC Branch office, Bangalore before the expiry of the validity period.
+        <br>
+    </p>
+</form>
+{% endblock body %}

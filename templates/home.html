@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/main.css"/>
+{% endblock %}
+{% block title %}
+Home
+{% endblock title %}
+
+{% block body %}
+    <div style="text-align:center;color:blue">
+        <h5><b>WELCOME To Bank Guarantee Renewal</b></h5>
+        <p>oṃ sarve bhavantu sukhinaḥ.</p>
+    </div>
+    <div  class="row">        
+        <div class="col-md-6">
+            <div>
+                <img src="..\static\images\dummy_bank_image.JPG" class="d-block w-100"  style="height: 600px;" alt="...">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div>
+                <img src="..\static\images\letter_format.JPG" class="d-block w-100"  style="height: 600px;" alt="...">
+                
+            </div>        
+        <!--
+            <table>
+                <tr>
+                    <td>
+                        <div style="margin-left:100px;margin-top:50px">
+                        <div style="display:flex">
+                        <div class="node"></div><div  style="margin-left:10px;width:300px;font-size:1.5em;"><a href="{{ url_for('importfile') }}">Import Unit Data From File</a></div></div>
+                        <div class="line"></div>
+                        <div style="display:flex">
+                        <div class="node"></div><div style="margin-left:10px;width:300px;font-size:1.5em;"><a href="{{ url_for('index') }}">Add Unit Data</a></div><div>
+                        </div>
+                    </td>
+                    <td>
+                        < !-- <div class="node1" style="font-size:1.5em;"><a href="{{ url_for('importfile') }}">Import Unit Data From File</a></div>-- >
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        
+                    </td>
+                </tr>
+            </table>
+        -->
+        </div>
+        <footer style="text-align:center;color:blue">
+            &copy; Reserved for Wave Soft
+        </footer>
+    </div>
+{% endblock body %}

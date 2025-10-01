@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Table
+{% endblock title %}
+
+{% block body %}
+<div align="center">
+    <table>
+        <h1> Bank Gaurantee Renewal Status Report</h1>
+        <!--Displaying the converted table-->
+            <!-- <p>{{tables}}</p> -->
+            {% for table in tables %}
+            <h2 style="text-align:center">{{titles[loop.index]}}</h2>
+            <!--<p>{{table}}</p>-->
+            {{ table|safe }}
+            {% endfor %}
+        <!--</h1>-->
+    </table>
+</div>
+{% endblock body %}

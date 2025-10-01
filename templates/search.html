@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+<!--
+  {% block javascript %}
+<script type="text/javascript" source="myscript.js"></script>
+{% endblock javascript%}
+-->
+
+{% block title %}
+Search Response
+{% endblock title %}
+
+{% block body %}
+<!-- below with to endwith is used to display the messages in Flask UI-->
+{% with messages=get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+  <button  type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true"&times;></span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<!---->
+<script  type="text/javascript">
+  $(function() {
+	//If check_all checked then check all table rows
+	$("#check_all").on("click", function () {
+		if ($("input:checkbox").prop("checked")) {
+			$("input:checkbox[name='row-check']").prop("checked", true);
+		} else {
+			$("input:checkbox[name='row-check']").prop("checked", false);
+		}
+	});
+	// Check each table row checkbox
+	$("input:checkbox[name='row-check']").on("change", function () {
+		var total_check_boxes = $("input:checkbox[name='row-check']").length;
+		var total_checked_boxes = $("input:checkbox[name='row-check']:checked").length;
+
+		// If all checked manually then check check_all checkbox
+		if (total_check_boxes === total_checked_boxes) {
+			$("#check_all").prop("checked", true);
+		}
+		else {
+			$("#check_all").prop("checked", false);
+		}
+	});
+});
+</script>
+<div class="table-responsive">
+  <h1 style="text-align:center"> Search Records</h1>
+  <form action="/search" method="post">
+  <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">
+          <input type="checkbox" id="check_all" onclick="checkAll(this)"/></a>
+          </th>
+          <th scope="col">Serial No</th>
+          <th scope="col" rowspan="4">Unit Name</th>
+          <th scope="col" rowspan="2">Bank Name</th>
+          <th scope="col" rowspan="5">BG Details</th>
+          <th scope="col">Security Value</th>
+          <th scope="col">Submission Date</th>
+          <th scope="col">Renewal Date</th>
+          <th scope="col">Claim Upto</th>
+          <th scope="col">View</th>
+          <th scope="col">Send Mail</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for post in posts %}
+          <tr>
+              <td><input type="checkbox" name="row-check" value="{{post.sid}}"></td>
+              <th scope="row">{{post.sid}}</th>
+              <td style="width:25%">
+                  {{post.unitname}},
+                  {{post.unitemail}},
+                  {{post.unitaddress}},
+                  {{post.unitnumber}}
+              </td>
+              <td style="width:25%">
+                  {{post.bankname}},
+                  {{post.bankaddress}}
+              </td>
+              <td style="width:25%">
+                  {{post.bgnumber}},
+                  {{post.bgdate}},
+                  {{post.stampnumber}},
+                  {{post.validperiod}},
+                  {{post.amount}}
+              </td>
+              <td>{{post.securityvalue}}</td>
+              <td>{{post.submitdate}}</td>
+              <td>{{post.renewaldate}}</td>
+              <td>{{post.claimamount}}</td>
+              <td><a href="/generatepdf/{{post.sid}}"><button class="btn btn-primary">View</button></a></td>
+              <td><a href="/sendmail/{{post.sid}}"><button class="btn btn-primary" style="width:100%" >Mail</button></a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </form>
+</div> 
+{% endblock body %}

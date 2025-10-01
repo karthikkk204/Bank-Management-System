@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Contact
+{% endblock title %}
+
+{% block body %}
+<!-- <h1> This is my Contact page </h1> -->
+<div class="container  mt-4" style="background-color:grey">
+    <div class="row">
+        <div class="col-lg-4 d-flex flex-column address-wrap">
+            <div class="single-contact-address d-flex flex-row">
+                <div class="icon">
+                    <span class="lnr lnr-home"></span>
+                </div>
+                <div class="contact-details text-white">
+                    <h5> Bangalore, India</h5>
+                </div>
+            </div>
+            <div class="single-contact-address d-flex flex-row">
+                <div class="icon">
+                    <span class="lnr lnr-phone-handset"></span>
+                </div>
+                <div class="contact-details  text-white">
+                    <h5>91 (880) 9865 562</h5>
+                </div>
+            </div>
+            <div class="single-contact-address d-flex flex-row">
+                <div class="icon">
+                    <span class="lnr lnr-envelope"></span>
+                </div>
+                <div class="contact-details text-white">
+                    <h5>support@chitti.com</h5>
+                    <p>Contact for any support!</p>
+                </div>
+            </div>														
+        </div>
+        <div class="col-lg-8">
+            <form role="form" method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-9 form-group text-white">
+                        <label for="email">To Email:</label>
+                        <input type="email" class="form-control" id="email" name="contemail" placeholder="Enter email" maxlength="50">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-9 form-group text-white">
+                        <label for="subject">Subject:</label>
+                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Subject" maxlength="50">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-9 form-group text-white">
+                        <label for="name">Message:</label>
+                        <textarea class="form-control" type="textarea" id="message" name="message"  maxlength="6000" rows="4"> Enter the Message </textarea>
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-sm-9 form-group text-white">
+                        <label for="name">File:</label>
+                        <input name="file[]" multiple="multiple" class="form-control" type="file" id="file">
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-sm-9 form-group text-white">
+                    <button type="submit" name="sendmail" class="primary-btn mt-30 text-blue"> Send Message </button>
+                </div>                
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}
+{% block finalscript %}
+    <script>
+        $('.contact-item').toggleClass('active');
+    </script>
+{% endblock %}

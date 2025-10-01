@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Login
+{% endblock title %}
+
+{% block body %}
+<!-- to add margin and padding we can create a div with class = container-->
+<!-- mt-3 means margin from top, when we use container it will attach to top,
+   so we have to give some space we gave mt-3 -->
+<!-- if we use  'for' in the label, 'id' in the text means when we click label
+the Id box will be highlited, since it is a bootstrap formgroup and form-control
+it will be highlighted the border in blue color-->
+<!--jumbotron willgive the back ground color-->
+<!--Please be noted all class are belongs to bootstraap, even text-center-->
+<div class="container mt-3">
+    <div class = "row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4 jumbotron">
+          <!-- for Sign up Here , we can give back ground(bg-info) color, and text color (text-white)-->
+          <h4 class="text-center bg-success text-white">Login</h4>
+          <!-- 'br' Gives the space between above title and form-->
+          <br/>
+
+          <!-- below with to endwith is used to display the messages in Flask UI-->
+          {% with messages=get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+          {% for category, message in messages %}
+          <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+            {{message}}
+            <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+              <span aria-hidden="true"&times;></span>
+            </button>
+          </div>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+          <!---->
+          <form action="/login" method="POST">
+            <!--name attrib is very important for backend-->
+            <!--'required' attrib is important, other wise without giving anything it will accept-->
+            <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <!-- advantage of type="password" is when we type the password it is not visible, it will show as *-->
+              <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <!--make "submit" as a block button i class we use d-grid gap-2 col-4 mx-auto-->
+            <button type="submit" class="btn btn-success btn-small btn-block">Login</button>
+          </form>
+          <br/>
+          Not a user <a href="/signup">Signup</a>
+        </div>
+      <div class="col-md-4"></div>
+    </div>
+  </div>
+{% endblock body %}

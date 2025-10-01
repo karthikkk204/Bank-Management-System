@@ -1,0 +1,226 @@
+{% extends 'base.html' %}
+<!--
+  {% block javascript %}
+<script type="text/javascript" source="myscript.js"></script>
+{% endblock javascript%}
+-->
+
+{% block title %}
+B.G Renual Status
+{% endblock title %}
+
+{% block body %}
+<script>
+  function checkAllForRenewal() {
+    let elements = $('[name="renewal-check"]');
+    //alert(elements.length);
+    //alert(elements[0].getAttribute('name'));  
+    var sid_list = "";
+    for(let i in elements) { 
+        let ele = elements[i];
+        //alert(ele);
+        //console.log(ele);
+        
+        //alert(cur_id);
+        //if($(`input:checkbox[id='${cur_id}']`).prop("checked"))
+          if(ele.checked) {
+            let cur_id = ele.getAttribute('value');
+            //alert(cur_id);
+            //console.log(cur_id);
+          sid_list += cur_id+','; 
+          }
+    }
+    //console.log(sid_list);
+    //alert(sid_list);
+   
+    const response = confirm("Do you want update the Renewal completed Status for selected records?");
+
+    if (response) {
+      //alert("I am in response Yes") ;
+      $.ajax({
+        url:'/updatezorenewalstatus',
+        type:'POST',
+        data:{data:sid_list},
+        success:function(reponse) {
+          console.log("Updated renewal status successfully");
+        }
+      });
+    }  
+    else {
+      //alert("I am in response Cancel") ;
+      $("input:checkbox[name='renewal-check']").prop("checked", false);
+      $("#check_final_renewal").prop("checked", false);
+    }
+    
+  }
+  function onCheckConfirmStatus() {
+    $("input:checkbox[name='renewal-check']").prop("checked", $("#check_final_renewal").prop("checked"));
+    setTimeout(function(){
+      checkAllForRenewal();
+      window.location.reload();
+    }, 500);
+  }
+  function onCheckAll() {
+      $("input:checkbox[name='row-check']").prop("checked", $("#check_all").prop("checked"));
+      $("input:checkbox[name='row-check']").on("change", function () {
+        var total_check_boxes = $("input:checkbox[name='row-check']").length;
+        var total_checked_boxes = $("input:checkbox[name='row-check']:checked").length;
+
+        // If all checked manually then check check_all checkbox
+        if (total_check_boxes === total_checked_boxes) {
+            $("#check_all").prop("checked", true);
+        }
+        else {
+            $("#check_all").prop("checked", false);
+        }
+    });
+  }
+  function printSelected() {
+    let elements = $('[name="row-check"]');
+    //alert(elements.length);
+    //alert(elements[0].getAttribute('name'));  
+    var sid_list = "";
+    for(let i in elements) { 
+        let ele = elements[i];
+        //alert(ele);
+        console.log(ele);
+        
+        //alert(cur_id);
+        //if($(`input:checkbox[id='${cur_id}']`).prop("checked"))
+          if(ele.checked) {
+            let cur_id = ele.getAttribute('value');
+            console.log(cur_id);
+          sid_list += cur_id+',';
+          
+          }
+      }
+      //console.log(sid_list);
+      const response = confirm("Do you want Print the selected records?");
+  
+      if (response) {
+        $.post("/printselected", {data:sid_list}, function(result){
+          console.log("Printed successfully");
+        });
+      }
+  }
+   
+  function sendMailSelected() {
+    let elements = $('[name="row-check"]');
+    //alert(elements.length);
+    //alert(elements[0].getAttribute('name'));  
+    var sid_list = "";
+    for(let i in elements) { 
+        let ele = elements[i];
+        //alert(ele);
+        //console.log(ele);
+        
+        //alert(cur_id);
+        //if($(`input:checkbox[id='${cur_id}']`).prop("checked"))
+          if(ele.checked) {
+            let cur_id = ele.getAttribute('value');
+            //console.log(cur_id);
+          sid_list += cur_id+',';
+          }
+    }
+    //console.log(sid_list);
+    const response = confirm("Do you want send mail to the selected records?");
+    if (response) {
+        $.ajax({
+          url:'/sendconfirmmailselected',
+          type:'POST',
+          data:{data:sid_list},
+          success:function(reponse) {
+            console.log("Mails Sent successfully");
+            window.location.reload();
+          }
+        });
+      }
+  }
+</script>
+    <!-- below with to endwith is used to display the messages in Flask UI-->
+    {% with messages=get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+    {{message}}
+    <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" onclick=delete_flash(this)>
+        <span aria-hidden="true"&times;></span>
+    </button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <!---->
+    <div class="table-responsive">
+        <h1 style="text-align:center"> Bank Guarantee Renewal Data Entry</h1>
+        <!--<form action="/deleteselected" method="post">-->
+        <div style="flex:display">
+          <button type="submit" class="btn btn-primary" style="float:right;text-color:white;margin-left:10px" name="action" value="mail" onclick="sendMailSelected()">Mail Selected</button></a></td>
+          <button  type="submit" class="btn btn-primary" style="float:right;text-color:white;" name="action" value="print"  onclick="printSelected()" disabled>Print Selected</button></a></td> 
+        </div>
+        <table class="table">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">
+                <input type="checkbox" id="check_all" onclick="onCheckAll()"/>
+                </th>
+                <th scope="col" rowspan="4">Unit Name</th>
+                <th scope="col" rowspan="2">Bank Name</th>
+                <th scope="col" rowspan="5">BG Details</th>
+                <th scope="col">Security Value</th>
+                <th scope="col">Submission Date</th>
+                <th scope="col">Renewal Date</th>
+                <th scope="col">Claim Upto</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Send Mail</th>
+                <th scope="col">Print</th>
+                <!--
+                <th scope="col">
+                  Confirm ZO Renewal?
+                  <input type="checkbox" id="check_final_renewal" onclick="onCheckConfirmStatus()"/>
+                </th>
+              -->
+              </tr>
+            </thead>
+            <tbody>
+              {% for post in query %}
+                <tr>
+                    <th scope="row"><input type="checkbox"  id="{{post.sid}}" name="row-check" value="{{post.sid}}"></th>
+                    <td style="width:25%">
+                        {{post.unitname}},
+                        {{post.unitemail}},
+                        {{post.unitaddress}},
+                        {{post.unitnumber}}
+                    </td>
+                    <td style="width:25%">
+                        {{post.bankname}},
+                        {{post.bankaddress}}
+                    </td>
+                    <td style="width:25%">
+                        {{post.bgnumber}},
+                        {{post.bgdate}},
+                        {{post.stampnumber}},
+                        {{post.validperiod}},
+                        {{post.amount}}
+                    </td>
+                    <td>{{post.securityvalue}}</td>
+                    <td>{{post.submitdate}}</td>
+                    <td style="width:25%">{{post.renewaldate}}</td>
+                    <td>{{post.claimamount}}</td>
+                    <td><a href="/confirmationedit/{{post.sid}}"><button class="btn btn-primary">Edit</button></a></td>
+                    <td><a href="/sendmail/{{post.sid}}"><button class="btn btn-primary" style="width:100%" onclick="return confirm('Do you want to send Mail?');">Mail</button></a></td>
+                    <td><a href="/export/{{post.sid}}"><button class="btn btn-primary" onclick="return confirm('Do you want Print?');">Print</button></a></td>
+                    <!--<td><input type="text" style="width:60%" class="txtedit" name="renewalprocessed"  id="renewalprocessed_{{post.sid}}" value="{{post.renewalprocessed}}"></td>-->
+                    <!-- <td><a href="/zoprocessed/{{post.sid}}"><input type="checkbox"  onclick="return confirm('Do you want to update final confirmation?');" style="padding-top:5px;" id="{{post.sid}}" name="renewal-check" value="{{post.sid}}"></a><td>-->
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+       <!--</form> -->
+      </div> 
+      {% endblock body %}
+      {% block finalscript %}
+      <script>
+        $('.fordatarenewal-item').toggleClass('active');
+      </script>
+      {% endblock %}

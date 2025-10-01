@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/static/main.css"/>
+{% endblock %}
+{% block title %}
+Import File
+{% endblock title %}
+{% block body %}
+<div>
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4" style="margin-top:50px">
+            <form action="/importfile" method="POST"  enctype="multipart/form-data">
+                <div style="background-color:#e0ebeb">
+                    <h3 style="margin-left:20%;margin-top:10px"> Import Unit Data Details</h3><br>
+                    <input style="margin-left:45%;margin-top:10px" type="file" name = "file">
+                    <br>
+                    <br>
+                    <button type="submit" class="btn btn-success btn-sm btn-block"><b>Submit</b></button>
+                </div>
+            </form>
+        </div>        
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
+{% endblock body %}

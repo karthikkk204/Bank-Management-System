@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Edit Record
+{% endblock title %}
+{% block body %}
+<div>
+    <form action="/edit/{{posts.sid}}" method="post" class="jumbotron">
+        <div class="row">
+            <div class="col-md-3">
+            <h4 class="text-center bg-dark text-white">Unit Details</h4>
+            <!--<br>-->
+                <div class="form-group">
+                    <label><b>Full Name:</b></label>
+                    <input type="text" class="form-control" name="unitname" value="{{posts.unitname}}" placeholder="Full Name" required/>
+                </div>
+                <div class="form-group">
+                    <label><b>Address:</b></label>
+                    <textarea class="form-control" type1="textarea" id="unitaddress" value="{{posts.unitaddress}}" name="unitaddress" placeholder="Enter Unit Address" maxlength="6000">{{posts.unitaddress}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label><b>Email:</b></label>
+                    <input type="email" class="form-control" id="unitemail" value="{{posts.unitemail}}" name="unitemail" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Phone Number:</b></label>
+                    <input type="number" class="form-control" id="unitnumber" value="{{posts.unitnumber}}" name="unitnumber" placeholder="Phone Number" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Gender:</b></label>
+                    <select class="form-control" id="gender" value="{{posts.gender}}" name="gender" required>
+                        <option selected>{{posts.gender}}</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2">
+            <h4 class="text-center bg-dark text-white">Bank Details</h4>
+            <!--<br> -->
+                <div class="form-group">
+                    <label><b>Bank Manager Name:</b></label>
+                    <input type="text" class="form-control" value="{{posts.bankheadname}}" name="bankheadname" placeholder="Branch Head Name" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Bank Name:</b></label>
+                    <input type="text" class="form-control"  value="{{posts.bankname}}" name="bankname" placeholder="Bank Name" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Bank Address:</b></label>
+                    <textarea class="form-control" type="textarea" id="bankaddress" value="{{posts.bankaddress}}" name="bankaddress"  placeholder="Enter Bank Address"  maxlength="6000">{{posts.bankaddress}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label><b>Bank Email Id:</b></label>
+                    <input type="text" class="form-control" value="{{posts.bankemailid}}" name="bankemailid" placeholder="Bank Email Id" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Bank Contact Number:</b></label>
+                    <input type="text" class="form-control" value="{{posts.bankphonenumber}}" name="bankphonenumber" placeholder="Bank Contact Number" required>
+                </div>
+               
+            </div>
+            <div class="col-md-2">
+            <h4 class="text-center bg-dark text-white">Bank Guarantee Details</h4>
+            <!--<br>-->
+                <div class="form-group">
+                    <label><b>B.G Number:</b></label>
+                    <input type="text" class="form-control" id="bgnumber" value="{{posts.bgnumber}}" name="bgnumber" placeholder="B.G Number" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Date Of Issueing:</b></label>
+                    <input type="text" class="form-control" id="bgdate" value="{{posts.bgdate}}" name="bgdate" placeholder="Date Of Issueing" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Stamp Paper Number:</b></label>
+                    <input type="text" class="form-control" id="stampnumber" value="{{posts.stampnumber}}" name="stampnumber" placeholder="Stamp Paper Number" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Valadity Period:</b></label>
+                    <input type="text" class="form-control" id="validperiod" value="{{posts.validperiod}}" name="validperiod" placeholder="Valadity Period" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Claim Period:</b></label>
+                    <input type="text" class="form-control" id="claimperiod" value="{{posts.claimperiod}}" name="claimperiod" placeholder="Claim Period" required>
+                  </div>
+                <div class="form-group">
+                    <label><b> Claim Amount:</b></label>
+                    <input type="number" class="form-control" id="amount" value="{{posts.amount}}" name="amount" placeholder="Amount" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Account Number:</b></label>
+                      <input type="text" class="form-control" id="accountnumber" value="{{posts.accountnumber}}" name="accountnumber" placeholder="Account Number" required>
+                  </div>
+            </div>
+            <div class="col-md-2">
+            <h4 class="text-center bg-dark text-white">Other Details</h4>
+            <!--<br>-->
+                <div class="form-group">
+                    <label><b>Security Value:</b></label>
+                    <input type="number" class="form-control" id="securityvalue" value="{{posts.securityvalue}}" name="securityvalue" placeholder="Security Value" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Issue Date:</b></label>
+                    <input type="text" class="form-control" id="submitdate" value="{{posts.submitdate}}" name="submitdate" placeholder="Submission Date" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Expiry Date:</b></label>
+                    <input type="text" class="form-control" id="renewaldate" value="{{posts.renewaldate}}" name="renewaldate" placeholder="Renewal Date" required>
+                </div>
+                <!--
+                <div class="form-group">
+                    <label><b>Claim Amount:</b></label>
+                    <input type="number" class="form-control" id="claimamount" value="{{posts.claimamount}}" name="claimamount" placeholder="Claim Upto" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="number" class="form-control" id="claimamount" value="{{posts.claimamount}}" name="claimamount" placeholder="Claim Upto" required>
+                </div>
+                -->
+            </div>
+            <div class="col-md-3">
+                <h4 class="text-center bg-dark text-white">Zonal Office Details</h4>
+                <!--<br>-->       
+                <div class="form-group">
+                    <label><b>Zonal Office Bank Name:</label>
+                    <input type="text" class="form-control" value="{{posts.zonalbankname}}" name="zonalbankname" placeholder="Bank Name" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Zonal Office Address:</b></label>
+                    <textarea class="form-control" type="textarea" id="address" value="{{posts.zoaddress}}" name="zoaddress"  maxlength="6000">{{posts.zoaddress}}</textarea>
+                </div>
+                <div class="form-group">
+                    <label><b>Zonal Office Email:</b></label>
+                    <input type="email" class="form-control" id="email" value="{{posts.zonalofficemail}}" name="zonalofficemail" placeholder="Email" required>
+                </div>                
+                <div class="form-group">
+                    <label><b>Contact Person Name:</b></label>
+                    <input type="text" class="form-control" value="{{posts.zocontactprsnname}}" name="zocontactprsnname" placeholder="Contact Person Name" required>
+                </div>
+                <div class="form-group">
+                    <label><b>Contact Phone Number:</b></label>
+                    <input type="number" class="form-control" id="number" value="{{posts.zophonenumber}}" name="zophonenumber" placeholder="Contact Phone Number" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-success btn-sm btn-block"><b>Update</b></button>
+    <form>
+  </div>
+{% endblock body %}
+{% block finalscript %}
+<script>  
+  $('#submitdate').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  $('#renewaldate').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  $('#bgdate').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  $('#validperiod').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  $('#claimperiod').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+</script>
+{% endblock %}
